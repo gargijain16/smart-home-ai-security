@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+.pytest_cache/
+# Node
+node_modules/
+frontend/dist/
+frontend/.env
+frontend/.env.local
+# Env and secrets
+.env
+# Data and generated artefacts (obtain/generate as documented)
+data/raw/*
+data/processed/*
+models/*
+reports/*
+!data/raw/.gitkeep
+!data/processed/.gitkeep
+!models/.gitkeep
+!reports/.gitkeep
+artifacts/
+*.db

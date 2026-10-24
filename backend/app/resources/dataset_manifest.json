@@ -1,0 +1,45 @@
+{
+  "selected": {
+    "name": "MQTT_UAD (MQTT Under Attack Dataset)",
+    "authors": "Aveleira-Mata, Alaiz-Moretón, Bayón-Gutiérrez, García-Ordás, Prieto-Fernández, García-Rodríguez et al.",
+    "year": 2025,
+    "data_repository": "figshare",
+    "data_doi": "10.6084/m9.figshare.24420958.v1",
+    "data_url": "https://doi.org/10.6084/m9.figshare.24420958.v1",
+    "paper_doi": "10.1016/j.dib.2025.112167",
+    "paper_url": "https://doi.org/10.1016/j.dib.2025.112167",
+    "licence": "CC BY 4.0 (attribution required; redistribution permitted with credit)",
+    "size": "about 79 MB (as listed on figshare)",
+    "files": ["DoS.csv", "MitM.csv", "Intrusion.csv"],
+    "published_counts": {
+      "DoS.csv": {"attack": 45513, "normal": 49112, "total": 94625},
+      "MitM.csv": {"attack": 3855, "normal": 106813, "total": 110668},
+      "Intrusion.csv": {"attack": 1898, "normal": 78995, "total": 80893}
+    },
+    "granularity": "one row per captured network frame, 67 features per frame (per the paper's abstract)",
+    "intended_use": "Training and testing ML-based intrusion detection for MQTT networks in home and industrial settings",
+    "bundled_in_repo": false
+  },
+  "verified_from_public_pages": [
+    "Title, authors, 2025 publication, figshare DOI and CC BY 4.0 licence",
+    "Three CSV files: DoS, MitM and Intrusion, with the frame counts listed above",
+    "67 features per frame, labelled normal and attack traffic captured on a real MQTT testbed in Spain"
+  ],
+  "NOT_verified": [
+    "Exact column names and the label-column encoding (the paper could not be opened in the build environment)",
+    "A stable direct-download URL: download manually from the DOI page; the notebook then validates the schema",
+    "What the 'Intrusion' attack consists of beyond its name"
+  ],
+  "alternatives_considered": [
+    {"name": "MQTTEEB-D", "url": "https://data.mendeley.com/datasets/jfttfjn6tr", "note": "Real MySignals/Raspberry Pi testbed with several processed variants. Licence not verified; a good second dataset."},
+    {"name": "MQTT-IoT-IDS2020", "url": "https://strathprints.strath.ac.uk/75251/", "note": "Simulated MQTT network with flow-based features and an open-access licence. Simulated testbed."},
+    {"name": "BCCC-IoT-MQTT-IDS-2025", "url": "https://www.yorku.ca/research/bccc/?p=3480", "note": "Large combination of three MQTT datasets (millions of records). Too big for a semester demo."}
+  ],
+  "why_selected": "Small enough to train in a free Colab runtime, openly licensed, frame-level labelled CSVs, and real captured MQTT traffic.",
+  "known_limitations": [
+    "Each file mixes normal and attack traffic of one attack family; normal traffic is therefore captured in different sessions per file, so a model can partly learn the capture session rather than the attack.",
+    "Frames are not independent; a random row split would leak. The notebook uses contiguous-block splitting.",
+    "The poster's kill chain (credential brute force, wildcard topic enumeration) is not guaranteed to be represented in this dataset. The simulator covers those scenarios with rules; the ML model is not evaluated on them.",
+    "Class imbalance is strong in MitM and Intrusion files."
+  ]
+}

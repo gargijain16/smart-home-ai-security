@@ -1,0 +1,8 @@
+# ML and evaluation methodology
+**Task:** multiclass classification of MQTT network-frame feature rows. **Models:** Decision Tree (depth 14, min leaf 3) and Random Forest (150 trees, depth 18, min leaf 2). Imbalance: `class_weight` (`balanced` / `balanced_subsample`); no oversampling, so evaluation data is untouched.
+**Leakage controls:** drop identifier/time-position columns; remove exact duplicates before splitting; split each source file in contiguous 200-frame blocks (70/15/15 train/val/test, whole blocks only) instead of random rows; imputer fitted on training rows only; the test split is used once, after model selection on **validation macro-F1**. Residual risk: block edges, and per-file session differences.
+**Metrics:** accuracy, macro precision/recall/F1, weighted F1, per-class precision/recall/F1/support, confusion matrix, per-class FPR/FNR, attack-vs-normal FPR/FNR, single-sample median/p95 latency and 1,000-row batch latency (measured on the training machine).
+**Probabilities:** Random Forest vote share is shown labelled as uncalibrated; Decision Tree confidence is not shown.
+**Explanations:** global impurity importance (always) and optional SHAP summary (if `shap` installed). Per-row "evidence" in the API is global importance with the row's values, labelled as such.
+**Not claimed:** any target accuracy, generalisation to other testbeds, or detection of scenarios absent from the training data.
+**Synthetic smoke mode:** overlapping synthetic distributions; proves the pipeline runs. The executed run gave test macro-F1 ≈ 0.61 with MitM recall 0, which shows the data is deliberately non-trivial and, more importantly, that these numbers mean nothing about real traffic.
